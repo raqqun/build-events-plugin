@@ -24,7 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Example of Jenkins global configuration.
+ * Represents the global configuration for the sample plugin.
+ * This class allows setting credentials and API URL used by the plugin.
  */
 @Getter
 @Extension
@@ -34,27 +35,51 @@ public class SampleConfiguration extends GlobalConfiguration {
     private String sampleCredentialId;
     private String sampleApiUrl;
 
+    /**
+     * Retrieves the singleton instance of {@link SampleConfiguration}.
+     *
+     * @return the {@link SampleConfiguration} instance.
+     */
     public static SampleConfiguration get() {
         return ExtensionList.lookupSingleton(SampleConfiguration.class);
     }
 
+    /**
+     * Constructor that loads any saved configuration from disk.
+     */
     public SampleConfiguration() {
-        // When Jenkins is restarted, load any saved configuration from disk.
         load();
     }
 
+    /**
+     * Sets the credential ID for accessing external services.
+     *
+     * @param sampleCredentialId the credential ID to be set.
+     */
     @DataBoundSetter
     public void setSampleCredentialId(String sampleCredentialId) {
         this.sampleCredentialId = sampleCredentialId;
         save();
     }
 
+    /**
+     * Sets the API URL used by the plugin.
+     *
+     * @param sampleApiUrl the API URL to be set.
+     */
     @DataBoundSetter
     public void setSampleApiUrl(String sampleApiUrl) {
         this.sampleApiUrl = sampleApiUrl;
         save();
     }
 
+    /**
+     * Populates the list box with available credentials.
+     *
+     * @param item the Jenkins item.
+     * @param sampleCredentialId the current credential ID.
+     * @return a {@link ListBoxModel} containing the available credentials.
+     */
     public ListBoxModel doFillSampleCredentialIdItems(
             @AncestorInPath Item item, @QueryParameter String sampleCredentialId) {
         StandardListBoxModel listBoxModel = new StandardListBoxModel();
@@ -69,6 +94,12 @@ public class SampleConfiguration extends GlobalConfiguration {
                 .includeCurrentValue(sampleCredentialId);
     }
 
+    /**
+     * Validates the API URL entered by the user.
+     *
+     * @param sampleApiUrl the API URL to validate.
+     * @return a {@link FormValidation} indicating whether the URL is valid or not.
+     */
     public FormValidation doCheckSampleApiUrl(@QueryParameter String sampleApiUrl) {
         try {
             new URL(sampleApiUrl);
@@ -79,6 +110,11 @@ public class SampleConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
+    /**
+     * Retrieves the API token from the configured credentials.
+     *
+     * @return the API token as a plain text string.
+     */
     public String getApiToken() {
         StringCredentials cr = CredentialsMatchers.firstOrNull(
                 CredentialsProvider.lookupCredentials(
@@ -92,6 +128,11 @@ public class SampleConfiguration extends GlobalConfiguration {
         return cr.getSecret().getPlainText();
     }
 
+    /**
+     * Retrieves the configured API URL.
+     *
+     * @return the API URL as a string.
+     */
     public String getApiUrl() {
         return getSampleApiUrl();
     }

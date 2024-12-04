@@ -23,11 +23,21 @@ import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Listener for Jenkins run events.
+ * This class collects build information and sends it to an external API.
+ */
 @Extension
 public class SampleRunListener extends RunListener<Run<?, ?>> {
 
     private static final Logger log = LoggerFactory.getLogger(SampleRunListener.class);
 
+    /**
+     * Invoked when a build is completed.
+     *
+     * @param run the completed build.
+     * @param listener the task listener.
+     */
     @Override
     public void onCompleted(Run<?, ?> run, @NonNull TaskListener listener) {
         Map<String, List<ScmCheckout>> checkedSCM = SampleSCMListener.getCheckedSCM();
@@ -74,16 +84,32 @@ public class SampleRunListener extends RunListener<Run<?, ?>> {
         ExternalApiService.sendData(ExternalApiService.buildToJson(build));
     }
 
+    /**
+     * Invoked when a build is finalized.
+     *
+     * @param run the finalized build.
+     */
     @Override
     public void onFinalized(Run<?, ?> run) {
         log.info("onFinalized");
     }
 
+    /**
+     * Invoked when a build is initialized.
+     *
+     * @param run the build being initialized.
+     */
     @Override
     public void onInitialize(Run<?, ?> run) {
         log.info("onInitialize");
     }
 
+    /**
+     * Invoked when a build is started.
+     *
+     * @param run the build that has started.
+     * @param listener the task listener.
+     */
     @Override
     public void onStarted(Run<?, ?> run, TaskListener listener) {
         log.info("onStarted");

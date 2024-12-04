@@ -12,6 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Listener for Jenkins executor events.
+ * This class tracks the agents involved in Jenkins builds.
+ */
 @Extension
 @Slf4j
 public class SampleExecutorListener implements ExecutorListener {
@@ -19,6 +23,12 @@ public class SampleExecutorListener implements ExecutorListener {
     @Getter
     private static final Map<String, List<Agent>> agents = new ConcurrentHashMap<>();
 
+    /**
+     * Invoked when a task is started by an executor.
+     *
+     * @param executor the executor that started the task.
+     * @param task the task that has started.
+     */
     @Override
     public void taskStarted(Executor executor, Queue.Task task) {
         Computer c = executor.getOwner();
