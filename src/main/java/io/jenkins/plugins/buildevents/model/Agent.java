@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample.model;
+package io.jenkins.plugins.buildevents.model;
 
 import java.util.Map;
 import lombok.AllArgsConstructor;

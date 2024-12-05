@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample;
+package io.jenkins.plugins.buildevents;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
@@ -9,11 +9,11 @@ import hudson.model.listeners.RunListener;
 import io.jenkins.blueocean.rest.impl.pipeline.FlowNodeWrapper;
 import io.jenkins.blueocean.rest.impl.pipeline.PipelineNodeGraphVisitor;
 import io.jenkins.blueocean.rest.model.BlueRun;
-import io.jenkins.plugins.sample.model.Agent;
-import io.jenkins.plugins.sample.model.BuildSummaryModel;
-import io.jenkins.plugins.sample.model.ScmCheckout;
-import io.jenkins.plugins.sample.model.Stage;
-import io.jenkins.plugins.sample.service.ExternalApiService;
+import io.jenkins.plugins.buildevents.model.Agent;
+import io.jenkins.plugins.buildevents.model.BuildSummary;
+import io.jenkins.plugins.buildevents.model.ScmCheckout;
+import io.jenkins.plugins.buildevents.model.Stage;
+import io.jenkins.plugins.buildevents.service.ExternalApiService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ import org.slf4j.LoggerFactory;
  * This class collects build information and sends it to an external API.
  */
 @Extension
-public class SampleRunListener extends RunListener<Run<?, ?>> {
+public class BuildEventsRunListener extends RunListener<Run<?, ?>> {
 
-    private static final Logger log = LoggerFactory.getLogger(SampleRunListener.class);
+    private static final Logger log = LoggerFactory.getLogger(BuildEventsRunListener.class);
 
     /**
      * Invoked when a build is completed.
@@ -40,10 +40,10 @@ public class SampleRunListener extends RunListener<Run<?, ?>> {
      */
     @Override
     public void onCompleted(Run<?, ?> run, @NonNull TaskListener listener) {
-        Map<String, List<ScmCheckout>> checkedSCM = SampleSCMListener.getCheckedSCM();
-        Map<String, List<Agent>> agentSystemEnvVars = SampleExecutorListener.getAgents();
+        Map<String, List<ScmCheckout>> checkedSCM = BuildEventsSCMListener.getCheckedSCM();
+        Map<String, List<Agent>> agentSystemEnvVars = BuildEventsExecutorListener.getAgents();
 
-        BuildSummaryModel build = new BuildSummaryModel();
+        BuildSummary build = new BuildSummary();
         build.setId(run.getNumber());
         build.setQueueId(run.getQueueId());
         build.setUrl(Jenkins.get().getRootUrl() + run.getUrl());

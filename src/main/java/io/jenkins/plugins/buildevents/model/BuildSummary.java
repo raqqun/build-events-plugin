@@ -1,11 +1,11 @@
-package io.jenkins.plugins.sample.model;
+package io.jenkins.plugins.buildevents.model;
 
 import java.util.List;
 import java.util.Map;
 import lombok.Data;
 
 @Data
-public class BuildSummaryModel {
+public class BuildSummary {
     private int id;
     private long queueId;
     private long timestamp;

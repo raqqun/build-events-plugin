@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample;
+package io.jenkins.plugins.buildevents;
 
 import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
@@ -24,52 +24,52 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents the global configuration for the sample plugin.
+ * Represents the global configuration for the build events plugin.
  * This class allows setting credentials and API URL used by the plugin.
  */
 @Getter
 @Extension
-public class SampleConfiguration extends GlobalConfiguration {
+public class BuildEventsConfiguration extends GlobalConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(SampleConfiguration.class);
-    private String sampleCredentialId;
-    private String sampleApiUrl;
+    private static final Logger log = LoggerFactory.getLogger(BuildEventsConfiguration.class);
+    private String buildEventsCredentialId;
+    private String buildEventsApiUrl;
 
     /**
-     * Retrieves the singleton instance of {@link SampleConfiguration}.
+     * Retrieves the singleton instance of {@link BuildEventsConfiguration}.
      *
-     * @return the {@link SampleConfiguration} instance.
+     * @return the {@link BuildEventsConfiguration} instance.
      */
-    public static SampleConfiguration get() {
-        return ExtensionList.lookupSingleton(SampleConfiguration.class);
+    public static BuildEventsConfiguration get() {
+        return ExtensionList.lookupSingleton(BuildEventsConfiguration.class);
     }
 
     /**
      * Constructor that loads any saved configuration from disk.
      */
-    public SampleConfiguration() {
+    public BuildEventsConfiguration() {
         load();
     }
 
     /**
      * Sets the credential ID for accessing external services.
      *
-     * @param sampleCredentialId the credential ID to be set.
+     * @param buildEventsCredentialId the credential ID to be set.
      */
     @DataBoundSetter
-    public void setSampleCredentialId(String sampleCredentialId) {
-        this.sampleCredentialId = sampleCredentialId;
+    public void setBuildEventsCredentialId(String buildEventsCredentialId) {
+        this.buildEventsCredentialId = buildEventsCredentialId;
         save();
     }
 
     /**
      * Sets the API URL used by the plugin.
      *
-     * @param sampleApiUrl the API URL to be set.
+     * @param buildEventsApiUrl the API URL to be set.
      */
     @DataBoundSetter
-    public void setSampleApiUrl(String sampleApiUrl) {
-        this.sampleApiUrl = sampleApiUrl;
+    public void setBuildEventsApiUrl(String buildEventsApiUrl) {
+        this.buildEventsApiUrl = buildEventsApiUrl;
         save();
     }
 
@@ -77,11 +77,11 @@ public class SampleConfiguration extends GlobalConfiguration {
      * Populates the list box with available credentials.
      *
      * @param item the Jenkins item.
-     * @param sampleCredentialId the current credential ID.
+     * @param buildEventsCredentialId the current credential ID.
      * @return a {@link ListBoxModel} containing the available credentials.
      */
-    public ListBoxModel doFillSampleCredentialIdItems(
-            @AncestorInPath Item item, @QueryParameter String sampleCredentialId) {
+    public ListBoxModel doFillBuildEventsCredentialIdItems(
+            @AncestorInPath Item item, @QueryParameter String buildEventsCredentialId) {
         StandardListBoxModel listBoxModel = new StandardListBoxModel();
 
         if (!Jenkins.get().hasPermission(Jenkins.ADMINISTER)) {
@@ -91,18 +91,18 @@ public class SampleConfiguration extends GlobalConfiguration {
         return listBoxModel
                 .includeEmptyValue()
                 .includeAs(ACL.SYSTEM2, item, StandardCredentials.class)
-                .includeCurrentValue(sampleCredentialId);
+                .includeCurrentValue(buildEventsCredentialId);
     }
 
     /**
      * Validates the API URL entered by the user.
      *
-     * @param sampleApiUrl the API URL to validate.
+     * @param buildEventsApiUrl the API URL to validate.
      * @return a {@link FormValidation} indicating whether the URL is valid or not.
      */
-    public FormValidation doCheckSampleApiUrl(@QueryParameter String sampleApiUrl) {
+    public FormValidation doCheckBuildEventsApiUrl(@QueryParameter String buildEventsApiUrl) {
         try {
-            new URL(sampleApiUrl);
+            new URL(buildEventsApiUrl);
         } catch (MalformedURLException e) {
             return FormValidation.error("Invalid Api URL");
         }
@@ -122,7 +122,7 @@ public class SampleConfiguration extends GlobalConfiguration {
                         Jenkins.get(), // Or specific item if scoped
                         null, // Authentication
                         (DomainRequirement) null), // DomainRequirement
-                CredentialsMatchers.withId(getSampleCredentialId()));
+                CredentialsMatchers.withId(getBuildEventsCredentialId()));
 
         assert cr != null;
         return cr.getSecret().getPlainText();
@@ -134,6 +134,6 @@ public class SampleConfiguration extends GlobalConfiguration {
      * @return the API URL as a string.
      */
     public String getApiUrl() {
-        return getSampleApiUrl();
+        return getBuildEventsApiUrl();
     }
 }

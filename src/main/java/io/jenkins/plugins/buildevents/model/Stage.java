@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample.model;
+package io.jenkins.plugins.buildevents.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

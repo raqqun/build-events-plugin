@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample;
+package io.jenkins.plugins.buildevents;
 
 import hudson.Extension;
 import hudson.FilePath;
@@ -7,7 +7,7 @@ import hudson.model.TaskListener;
 import hudson.model.listeners.SCMListener;
 import hudson.scm.SCM;
 import hudson.scm.SCMRevisionState;
-import io.jenkins.plugins.sample.model.ScmCheckout;
+import io.jenkins.plugins.buildevents.model.ScmCheckout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
  * This class tracks SCM checkouts performed during builds.
  */
 @Extension
-public class SampleSCMListener extends SCMListener {
+public class BuildEventsSCMListener extends SCMListener {
 
-    private static final Logger log = LoggerFactory.getLogger(SampleSCMListener.class);
+    private static final Logger log = LoggerFactory.getLogger(BuildEventsSCMListener.class);
 
     @Getter
     private static final Map<String, List<ScmCheckout>> checkedSCM = new ConcurrentHashMap<>();

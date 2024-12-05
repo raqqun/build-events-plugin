@@ -1,9 +1,9 @@
-package io.jenkins.plugins.sample.service;
+package io.jenkins.plugins.buildevents.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.jenkins.plugins.sample.SampleConfiguration;
-import io.jenkins.plugins.sample.model.BuildSummaryModel;
+import io.jenkins.plugins.buildevents.BuildEventsConfiguration;
+import io.jenkins.plugins.buildevents.model.BuildSummary;
 import java.io.IOException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExternalApiService {
 
-    private static final SampleConfiguration config = SampleConfiguration.get();
+    private static final BuildEventsConfiguration config = BuildEventsConfiguration.get();
     private static final Logger log = LoggerFactory.getLogger(ExternalApiService.class);
 
     public static void sendData(String jsonPayload) {
@@ -36,7 +36,7 @@ public class ExternalApiService {
         }
     }
 
-    public static String buildToJson(BuildSummaryModel build) {
+    public static String buildToJson(BuildSummary build) {
         Gson gson = new GsonBuilder().serializeNulls().create();
 
         return gson.toJson(build);

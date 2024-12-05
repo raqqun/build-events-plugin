@@ -1,9 +1,9 @@
-package io.jenkins.plugins.sample;
+package io.jenkins.plugins.buildevents;
 
 import hudson.Extension;
 import hudson.model.*;
 import hudson.slaves.SlaveComputer;
-import io.jenkins.plugins.sample.model.Agent;
+import io.jenkins.plugins.buildevents.model.Agent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Extension
 @Slf4j
-public class SampleExecutorListener implements ExecutorListener {
+public class BuildEventsExecutorListener implements ExecutorListener {
 
     @Getter
     private static final Map<String, List<Agent>> agents = new ConcurrentHashMap<>();

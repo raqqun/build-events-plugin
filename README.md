@@ -1,8 +1,8 @@
-# Sample Jenkins Plugin
+# Build Events Plugin
 
 ## Overview
 
-The **Sample Jenkins Plugin** provides enhanced capabilities for monitoring and interacting with Jenkins builds. This plugin includes global configuration options, listens to executor events, run events, and SCM activities, and integrates with external APIs to capture critical data about builds and stages. The primary goal of this plugin is to collect information throughout the Jenkins pipeline and send it to an external service for further processing or analysis.
+The **Build Events Plugin** provides enhanced capabilities for monitoring and interacting with Jenkins builds. This plugin includes global configuration options, listens to executor events, run events, and SCM activities, and integrates with external APIs to capture critical data about builds and stages. The primary goal of this plugin is to collect information throughout the Jenkins pipeline and send it to an external service for further processing or analysis.
 
 ## Features
 
@@ -59,7 +59,7 @@ This class listens to **SCM checkout events** during a build. It captures releva
 
 2. **Configure the Plugin**
    - Navigate to **Manage Jenkins > Configure System**.
-   - Locate **Sample Jenkins Plugin** section.
+   - Locate **Build Events Plugin** section.
    - Enter the **API URL** and **Credentials** that will be used for external service communication.
 
 3. **Usage**
