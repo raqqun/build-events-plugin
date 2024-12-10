@@ -1,2 +1,2 @@
 _extends: .github
-tag-template: jenkins-plugin-demo-$NEXT_MINOR_VERSION
+tag-template: build-events-$NEXT_MINOR_VERSION
